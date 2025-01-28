@@ -1,0 +1,23 @@
+{
+  "name": "npx-arnabjk008",
+  "version": "1.0.0",
+  "description": "A CLI tool to showcase social links, projects, and special features.",
+  "main": "src/index.js",
+  "bin": {
+    "npx-arnabjk008": "bin/index.js"
+  },
+  "scripts": {
+    "start": "node bin/index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "keywords": [
+    "npx",
+    "cli",
+    "social",
+    "projects",
+    "showcase"
+  ],
+  "author": "arnabjk008",
+  "license": "MIT"
+}
