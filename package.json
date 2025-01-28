@@ -1,23 +1,39 @@
 {
   "name": "npx-arnabjk008",
   "version": "1.0.0",
-  "description": "A CLI tool to showcase social links, projects, and special features.",
+  "description": "A beautiful CLI to showcase my portfolio, projects, and achievements",
   "main": "src/index.js",
+  "type": "module",
   "bin": {
-    "npx-arnabjk008": "bin/index.js"
+    "arnabjk008": "./bin/index.js"
   },
   "scripts": {
     "start": "node bin/index.js"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.12",
+    "boxen": "^7.1.1",
+    "open": "^10.0.3",
+    "gradient-string": "^2.0.2",
+    "figlet": "^1.7.0"
+  },
   "keywords": [
     "npx",
     "cli",
-    "social",
+    "portfolio",
+    "showcase",
     "projects",
-    "showcase"
+    "developer"
   ],
   "author": "arnabjk008",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arnabjk008/npx-arnabjk008"
+  },
+  "bugs": {
+    "url": "https://github.com/arnabjk008/npx-arnabjk008/issues"
+  },
+  "homepage": "https://github.com/arnabjk008/npx-arnabjk008#readme"
 }
