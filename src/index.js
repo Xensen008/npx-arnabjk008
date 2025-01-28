@@ -6,49 +6,76 @@ import { showSocialLinks } from './commands/social.js';
 import { showProjects } from './commands/projects.js';
 import { showcaseSpecial } from './commands/showcase.js';
 
-const displayBanner = () => {
+const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const displayBanner = async () => {
     console.clear();
-    const msg = figlet.textSync('Arnab JK', {
-        font: 'Standard',
-        horizontalLayout: 'default',
+    const text = figlet.textSync('DevSpace', {
+        font: 'ANSI Shadow',
+        horizontalLayout: 'fitted',
         verticalLayout: 'default'
     });
-    console.log(gradient.pastel.multiline(msg));
-    console.log('\n' + chalk.cyan('A passionate developer who loves to build cool stuff!\n'));
+    
+    // Create a beautiful gradient effect
+    const rainbowTitle = gradient(['#ff5b77', '#00ff88', '#0095ff']).multiline(text);
+    console.log(rainbowTitle);
+    
+    // Animated tagline
+    const taglines = [
+        "Where Code Meets Creativity 🎨",
+        "Explore • Learn • Build 🚀",
+        "Welcome to the Future of Development ✨"
+    ];
+    
+    for (const line of taglines) {
+        console.log('\n' + chalk.cyan(line));
+        await sleep(500);
+    }
+    
+    console.log('\n' + chalk.dim('─'.repeat(process.stdout.columns)));
 };
 
 const questions = [
     {
         type: 'list',
         name: 'action',
-        message: '🚀 What would you like to explore?',
+        message: chalk.yellow('🎯  What would you like to explore today?'),
+        prefix: '◉',
         choices: [
             {
-                name: '📂 View my Projects',
+                name: chalk.green('📂  Innovative Projects') + chalk.dim(' - Discover amazing builds'),
                 value: 'projects'
             },
             {
-                name: '🌐 Check my Social Links',
+                name: chalk.blue('🌐  Connect & Network') + chalk.dim(' - Find me on social platforms'),
                 value: 'social'
             },
             {
-                name: '✨ Special Showcase',
+                name: chalk.magenta('✨  Special Features') + chalk.dim(' - Explore unique tools & resources'),
                 value: 'showcase'
             },
+            new inquirer.Separator(chalk.dim('─'.repeat(50))),
             {
-                name: '👋 Exit',
+                name: chalk.red('👋  Exit DevSpace'),
                 value: 'exit'
             }
         ]
     }
 ];
 
+const displayFooter = async () => {
+    console.log('\n' + chalk.dim('─'.repeat(process.stdout.columns)));
+    console.log(chalk.dim('Pro Tip: ') + chalk.gray('Use arrow keys to navigate and Enter to select'));
+};
+
 const main = async () => {
-    displayBanner();
+    await displayBanner();
     
     while (true) {
+        await displayFooter();
         const { action } = await inquirer.prompt(questions);
         
+        console.clear();
         switch (action) {
             case 'projects':
                 await showProjects();
@@ -60,7 +87,13 @@ const main = async () => {
                 await showcaseSpecial();
                 break;
             case 'exit':
-                console.log(chalk.yellow('\nThanks for visiting! Have a great day! 👋\n'));
+                console.log('\n' + gradient(['#ff5b77', '#00ff88']).multiline(
+                    figlet.textSync('See You Soon!', {
+                        font: 'Small',
+                        horizontalLayout: 'fitted'
+                    })
+                ));
+                console.log(chalk.cyan('\n🌟 Thank you for exploring DevSpace! Have a great day!\n'));
                 process.exit(0);
         }
     }

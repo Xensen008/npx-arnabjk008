@@ -1,42 +1,85 @@
 import chalk from 'chalk';
-// import boxen from 'boxen';
+import boxen from 'boxen';
 import open from 'open';
 import inquirer from 'inquirer';
+import gradient from 'gradient-string';
 
 const socialLinks = {
-    GitHub: 'https://github.com/xensen008',
-    Twitter: 'https://twitter.com/arnabjk008',
-    LinkedIn: 'https://linkedin.com/in/arnabjk008',
-    Portfolio: 'https://arnabjk008.tech'
+    GitHub: {
+        url: 'https://github.com/yourusername',
+        description: 'Check out my open source projects and contributions',
+        icon: '🔮'
+    },
+    Twitter: {
+        url: 'https://twitter.com/yourusername',
+        description: 'Follow me for tech insights and updates',
+        icon: '🐦'
+    },
+    LinkedIn: {
+        url: 'https://linkedin.com/in/yourusername',
+        description: 'Connect with me professionally',
+        icon: '💼'
+    },
+    Portfolio: {
+        url: 'https://yourportfolio.dev',
+        description: 'Explore my detailed portfolio and blog',
+        icon: '🌟'
+    },
+    Blog: {
+        url: 'https://yourblog.dev',
+        description: 'Read my latest tech articles and tutorials',
+        icon: '📝'
+    }
+};
+
+const displaySocialHeader = () => {
+    console.log(gradient(['#00ff88', '#0095ff']).multiline('\n╭──────────── Connect With Me ────────────╮\n'));
+    console.log(chalk.cyan('Discover more about my work and connect with me across platforms!\n'));
 };
 
 export const showSocialLinks = async () => {
     console.clear();
-    const boxenOptions = {
-        padding: 1,
-        margin: 1,
-        borderStyle: 'round',
-        borderColor: 'cyan',
-        title: '🔗 Social Links'
-    };
+    displaySocialHeader();
 
-    const choices = Object.entries(socialLinks).map(([platform, url]) => ({
-        name: `${platform} - ${chalk.gray(url)}`,
-        value: url
+    const choices = Object.entries(socialLinks).map(([platform, info]) => ({
+        name: chalk.bold(`${info.icon}  ${platform}`) + '\n' +
+              chalk.dim('│ ') + chalk.gray(info.description) + '\n' +
+              chalk.dim('│ ') + chalk.blue(info.url),
+        value: info.url
     }));
-    choices.push({ name: '↩️ Back to main menu', value: 'back' });
+
+    choices.push(new inquirer.Separator(chalk.dim('─'.repeat(50))));
+    choices.push({ 
+        name: chalk.yellow('↩  Back to Main Menu'),
+        value: 'back'
+    });
 
     const { link } = await inquirer.prompt([
         {
             type: 'list',
             name: 'link',
-            message: 'Select a link to open in your browser:',
+            message: chalk.yellow('🎯  Where would you like to connect?'),
+            pageSize: 10,
             choices
         }
     ]);
 
     if (link !== 'back') {
         await open(link);
-        console.log(chalk.green(`\n✨ Opening ${link} in your browser...\n`));
+        const box = boxen(
+            chalk.green('✨ Opening browser to connect with you!\n\n') +
+            chalk.dim('URL: ') + chalk.blue(link),
+            {
+                padding: 1,
+                margin: 1,
+                borderStyle: 'round',
+                borderColor: 'cyan',
+                float: 'center'
+            }
+        );
+        console.log('\n' + box);
+        
+        console.log(chalk.dim('\nPress any key to continue...'));
+        await new Promise(resolve => process.stdin.once('data', resolve));
     }
 };
