@@ -1,7 +1,7 @@
 {
-  "name": "npx-arnabjk008",
-  "version": "1.0.0",
-  "description": "A beautiful CLI to showcase my portfolio, projects, and achievements",
+  "name": "arnabjk008",
+  "version": "1.0.1",
+  "description": "A beautiful CLI to showcase my portfolio, projects, and special tool",
   "main": "src/index.js",
   "type": "module",
   "bin": {
