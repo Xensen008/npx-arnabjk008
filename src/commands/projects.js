@@ -50,11 +50,27 @@ const displayProjectHeader = () => {
     console.log(gradient(['#ff5b77', '#00ff88']).multiline('\n╭──────────── Projects Gallery ────────────╮\n'));
 };
 
+const handleContinue = () => {
+    return new Promise(resolve => {
+        const cleanup = () => {
+            process.stdin.removeAllListeners('data');
+            process.stdin.pause();
+        };
+
+        process.stdin.resume();
+        process.stdin.setEncoding('utf8');
+        process.stdin.once('data', () => {
+            cleanup();
+            resolve();
+        });
+    });
+};
+
 export const showProjects = async () => {
-    console.clear();
-    displayProjectHeader();
-    
     while (true) {
+        console.clear();
+        displayProjectHeader();
+        
         const choices = projects.map(project => ({
             name: chalk.bold(project.name) + '\n' + 
                   chalk.dim('│ ') + chalk.gray(project.description) + '\n' +
@@ -62,7 +78,6 @@ export const showProjects = async () => {
             value: project
         }));
         
-        // Add View More Projects option
         choices.push({
             name: chalk.bold('🌟 View More Projects') + '\n' + 
                   chalk.dim('│ ') + chalk.gray('Explore more projects on GitHub') + '\n' +
@@ -86,15 +101,15 @@ export const showProjects = async () => {
             }
         ]);
 
-        if (selected === 'back') break;
+        if (selected === 'back') {
+            break;
+        }
         
         if (selected === 'more') {
             await open('https://github.com/xensen008?tab=repositories');
             console.log(chalk.green('\n✨ Opening GitHub profile to view more projects...\n'));
             console.log(chalk.dim('\nPress any key to continue...'));
-            await new Promise(resolve => process.stdin.once('data', resolve));
-            console.clear();
-            displayProjectHeader();
+            await handleContinue();
             continue;
         }
 
@@ -133,7 +148,7 @@ export const showProjects = async () => {
                         value: 'github'
                     },
                     { 
-                        name: chalk.green('🌐  Live Demo') + chalk.dim(' - See it in action'),
+                        name: chalk.green('🚀  View Live Demo') + chalk.dim(' - Open demo site'),
                         value: 'demo'
                     },
                     new inquirer.Separator(chalk.dim('─'.repeat(50))),
@@ -147,17 +162,14 @@ export const showProjects = async () => {
 
         if (action === 'github') {
             await open(selected.github);
-            console.log(chalk.green('\n✨ Opening GitHub repository in your browser...\n'));
+            console.log(chalk.green('\n✨ Opening GitHub repository...\n'));
+            console.log(chalk.dim('\nPress any key to continue...'));
+            await handleContinue();
         } else if (action === 'demo') {
             await open(selected.demo);
-            console.log(chalk.green('\n✨ Opening demo in your browser...\n'));
-        }
-        
-        if (action !== 'back') {
+            console.log(chalk.green('\n✨ Opening live demo...\n'));
             console.log(chalk.dim('\nPress any key to continue...'));
-            await new Promise(resolve => process.stdin.once('data', resolve));
-            console.clear();
-            displayProjectHeader();
+            await handleContinue();
         }
     }
 };

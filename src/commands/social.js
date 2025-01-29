@@ -32,34 +32,54 @@ const displaySocialHeader = () => {
     console.log(chalk.cyan('Discover more about my work and connect with me across platforms!\n'));
 };
 
-export const showSocialLinks = async () => {
-    console.clear();
-    displaySocialHeader();
+const handleContinue = () => {
+    return new Promise(resolve => {
+        const cleanup = () => {
+            process.stdin.removeAllListeners('data');
+            process.stdin.pause();
+        };
 
-    const choices = Object.entries(socialLinks).map(([platform, info]) => ({
-        name: chalk.bold(`${info.icon}  ${platform}`) + '\n' +
-              chalk.dim('│ ') + chalk.gray(info.description) + '\n' +
-              chalk.dim('│ ') + chalk.blue(info.url),
-        value: info.url
-    }));
-
-    choices.push(new inquirer.Separator(chalk.dim('─'.repeat(50))));
-    choices.push({ 
-        name: chalk.yellow('↩  Back to Main Menu'),
-        value: 'back'
+        process.stdin.resume();
+        process.stdin.setEncoding('utf8');
+        process.stdin.once('data', () => {
+            cleanup();
+            resolve();
+        });
     });
+};
 
-    const { link } = await inquirer.prompt([
-        {
-            type: 'list',
-            name: 'link',
-            message: chalk.yellow('🎯  Where would you like to connect?'),
-            pageSize: 10,
-            choices
+export const showSocialLinks = async () => {
+    while (true) {
+        console.clear();
+        displaySocialHeader();
+
+        const choices = Object.entries(socialLinks).map(([platform, info]) => ({
+            name: chalk.bold(`${info.icon}  ${platform}`) + '\n' +
+                  chalk.dim('│ ') + chalk.gray(info.description) + '\n' +
+                  chalk.dim('│ ') + chalk.blue(info.url),
+            value: info.url
+        }));
+
+        choices.push(new inquirer.Separator(chalk.dim('─'.repeat(50))));
+        choices.push({ 
+            name: chalk.yellow('↩  Back to Main Menu'),
+            value: 'back'
+        });
+
+        const { link } = await inquirer.prompt([
+            {
+                type: 'list',
+                name: 'link',
+                message: chalk.yellow('🎯  Where would you like to connect?'),
+                pageSize: 10,
+                choices
+            }
+        ]);
+
+        if (link === 'back') {
+            break;
         }
-    ]);
 
-    if (link !== 'back') {
         await open(link);
         const box = boxen(
             chalk.green('✨ Opening browser to connect with you!\n\n') +
@@ -75,6 +95,6 @@ export const showSocialLinks = async () => {
         console.log('\n' + box);
         
         console.log(chalk.dim('\nPress any key to continue...'));
-        await new Promise(resolve => process.stdin.once('data', resolve));
+        await handleContinue();
     }
 };
