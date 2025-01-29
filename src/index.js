@@ -2,6 +2,7 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import figlet from 'figlet';
 import gradient from 'gradient-string';
+import boxen from 'boxen';
 import { showSocialLinks } from './commands/social.js';
 import { showProjects } from './commands/projects.js';
 import { showcaseSpecial } from './commands/showcase.js';
@@ -10,7 +11,7 @@ const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const displayBanner = async () => {
     console.clear();
-    const text = figlet.textSync('DevSpace', {
+    const text = figlet.textSync('Xensen', {
         font: 'ANSI Shadow',
         horizontalLayout: 'fitted',
         verticalLayout: 'default'
@@ -20,11 +21,26 @@ const displayBanner = async () => {
     const rainbowTitle = gradient(['#ff5b77', '#00ff88', '#0095ff']).multiline(text);
     console.log(rainbowTitle);
     
+    // Display quick links
+    console.log(boxen(
+        chalk.bold('🌟 Quick Links:\n\n') +
+        `${chalk.dim('│')} ${chalk.cyan('GitHub:')}    ${chalk.blue('https://github.com/xensen008')}\n` +
+        `${chalk.dim('│')} ${chalk.cyan('Twitter:')}   ${chalk.blue('https://twitter.com/arnabjk008')}\n` +
+        `${chalk.dim('│')} ${chalk.cyan('Portfolio:')} ${chalk.blue('https://arnabjk008.tech')}`,
+        {
+            padding: 1,
+            margin: { top: 1, bottom: 1 },
+            borderStyle: 'round',
+            borderColor: 'cyan',
+            float: 'center'
+        }
+    ));
+    
     // Animated tagline
     const taglines = [
-        "Where Code Meets Creativity 🎨",
-        "Explore • Learn • Build 🚀",
-        "Welcome to the Future of Development ✨"
+        "Full Stack Developer & Open Source Enthusiast 🚀",
+        "Building Beautiful & Scalable Solutions ✨",
+        "Let's Explore My Digital Space! 🌟"
     ];
     
     for (const line of taglines) {
@@ -39,27 +55,31 @@ const questions = [
     {
         type: 'list',
         name: 'action',
-        message: chalk.yellow('🎯  What would you like to explore today?'),
+        message: chalk.yellow('🎯  What would you like to explore?'),
         prefix: '◉',
         choices: [
             {
-                name: chalk.green('📂  Innovative Projects') + chalk.dim(' - Discover amazing builds'),
+                name: chalk.green('📂  Projects') + '\n' +
+                      chalk.dim('│ ') + chalk.gray('Discover my latest builds and innovations'),
                 value: 'projects'
             },
             {
-                name: chalk.blue('🌐  Connect & Network') + chalk.dim(' - Find me on social platforms'),
+                name: chalk.blue('🌐  Connect') + '\n' +
+                      chalk.dim('│ ') + chalk.gray('Find me across social platforms'),
                 value: 'social'
             },
             {
-                name: chalk.magenta('✨  Special Features') + chalk.dim(' - Explore unique tools & resources'),
+                name: chalk.magenta('🛠  Developer Tools') + '\n' +
+                      chalk.dim('│ ') + chalk.gray('Explore useful CLI utilities'),
                 value: 'showcase'
             },
-            new inquirer.Separator(chalk.dim('─'.repeat(50))),
+            new inquirer.Separator(chalk.dim('─'.repeat(60))),
             {
-                name: chalk.red('👋  Exit DevSpace'),
+                name: chalk.red('👋  Exit'),
                 value: 'exit'
             }
-        ]
+        ],
+        pageSize: 8
     }
 ];
 
@@ -93,7 +113,7 @@ const main = async () => {
                         horizontalLayout: 'fitted'
                     })
                 ));
-                console.log(chalk.cyan('\n🌟 Thank you for exploring DevSpace! Have a great day!\n'));
+                console.log(chalk.cyan('\n🌟 Thank you for visiting! Have a great day!\n'));
                 process.exit(0);
         }
     }

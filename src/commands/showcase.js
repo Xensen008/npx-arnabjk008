@@ -29,6 +29,11 @@ const tools = [
                 name: 'Branch List',
                 cmd: 'git branch -a',
                 description: 'List all branches'
+            },
+            {
+                name: 'Remote Info',
+                cmd: 'git remote -v',
+                description: 'Show remote repository details'
             }
         ]
     },
@@ -51,6 +56,11 @@ const tools = [
                 name: 'CPU Info',
                 cmd: process.platform === 'win32' ? 'wmic cpu get caption,name,numberofcores' : 'lscpu',
                 description: 'Display CPU information'
+            },
+            {
+                name: 'System Version',
+                cmd: process.platform === 'win32' ? 'ver' : 'uname -a',
+                description: 'Show OS version details'
             }
         ]
     },
@@ -73,67 +83,97 @@ const tools = [
                 name: 'Internet Speed',
                 cmd: 'ping -n 4 8.8.8.8',
                 description: 'Quick internet speed test'
+            },
+            {
+                name: 'Port Scanner',
+                cmd: process.platform === 'win32' ? 'netstat -an' : 'netstat -tuln',
+                description: 'View open ports'
+            },
+            {
+                name: 'Network Routes',
+                cmd: process.platform === 'win32' ? 'route print' : 'netstat -r',
+                description: 'Display routing table'
+            }
+        ]
+    },
+    {
+        name: 'Development Tools',
+        description: 'Useful utilities for developers',
+        command: 'dev',
+        options: [
+            {
+                name: 'Node Version',
+                cmd: 'node -v',
+                description: 'Check Node.js version'
+            },
+            {
+                name: 'NPM Dependencies',
+                cmd: 'npm list --depth=0',
+                description: 'View installed packages'
+            },
+            {
+                name: 'Environment',
+                cmd: 'printenv',
+                description: 'List environment variables'
+            },
+            {
+                name: 'Docker Check',
+                cmd: 'docker version',
+                description: 'Check Docker installation'
             }
         ]
     }
 ];
 
-const achievements = [
-    {
-        title: 'Full Stack Developer',
-        description: 'Passionate about building end-to-end applications',
-        stats: {
-            'Frontend': 'React, Next.js, TailwindCSS',
-            'Backend': 'Node.js, Express, MongoDB',
-            'DevOps': 'Docker, Git, CI/CD'
-        },
-        icon: '🚀'
-    },
-    {
-        title: 'Open Source Contributor',
-        description: 'Active member of the open source community',
-        stats: {
-            'Repositories': '10+',
-            'Pull Requests': '30+',
-            'Stars': '100+'
-        },
-        icon: '⭐'
-    },
-    {
-        title: 'Tech Enthusiast',
-        description: 'Always exploring new technologies',
-        stats: {
-            'Languages': 'JavaScript, Python, Java',
-            'Frameworks': '8+',
-            'Projects': '15+'
-        },
-        icon: '💻'
-    }
-];
-
 const displayShowcaseHeader = () => {
     console.log(gradient(['#ff5b77', '#0095ff', '#00ff88']).multiline(`
-╭───────────────────────────────────╮
-│        Developer Showcase         │
-╰───────────────────────────────────╯
+╭───────────────────────────────────────────╮
+│           Developer Tools                 │
+│        Your CLI Swiss Army Knife          │
+╰───────────────────────────────────────────╯
 `));
 };
 
-const displayAchievement = (achievement) => {
-    return boxen(
-        `${chalk.bold(achievement.icon + '  ' + achievement.title)}\n` +
-        `${chalk.gray(achievement.description)}\n\n` +
-        Object.entries(achievement.stats)
-            .map(([key, value]) => `${chalk.cyan(key)}: ${chalk.yellow(value)}`)
-            .join('\n'),
-        {
-            padding: 1,
-            margin: 1,
-            borderStyle: 'round',
-            borderColor: 'magenta',
-            float: 'center'
+const formatCommandOutput = (output) => {
+    // Split output into lines
+    const lines = output.split('\n');
+    
+    // Format based on common patterns
+    return lines.map(line => {
+        // Git status coloring
+        if (line.includes('modified:')) return chalk.red(line);
+        if (line.includes('new file:')) return chalk.green(line);
+        if (line.includes('deleted:')) return chalk.yellow(line);
+        
+        // Version numbers
+        if (line.match(/v\d+\.\d+\.\d+/)) return chalk.cyan(line);
+        
+        // IP addresses
+        if (line.match(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/)) return chalk.yellow(line);
+        
+        // Memory/Disk values
+        if (line.match(/\d+[KMG]B/i)) return chalk.green(line);
+        
+        // Default formatting for other lines
+        return chalk.white(line);
+    }).join('\n');
+};
+
+const getErrorMessage = (command, error) => {
+    const errorMap = {
+        'docker': 'Docker is not installed. Please install Docker to use this feature.',
+        'npm': 'NPM command failed. Please ensure you are in a Node.js project directory.',
+        'git': 'Git command failed. Please ensure you are in a git repository.',
+        'default': 'Command execution failed. Please check if the required tool is installed.'
+    };
+
+    // Check which command type failed
+    for (const [cmd, msg] of Object.entries(errorMap)) {
+        if (command.cmd.startsWith(cmd)) {
+            return msg;
         }
-    );
+    }
+    return errorMap.default;
 };
 
 const runCommand = async (command) => {
@@ -141,10 +181,21 @@ const runCommand = async (command) => {
         console.clear();
         console.log(chalk.cyan('\n🔄 Running command: ') + chalk.yellow(command.cmd) + '\n');
         const { stdout, stderr } = await execAsync(command.cmd);
-        if (stderr) console.log(chalk.red(stderr));
-        console.log(chalk.white(stdout));
+        
+        if (stderr) {
+            console.log(chalk.red('\n⚠️  Warning:'));
+            console.log(chalk.gray(stderr));
+        }
+        
+        if (stdout) {
+            console.log(formatCommandOutput(stdout));
+        } else {
+            console.log(chalk.yellow('No output received from command.'));
+        }
     } catch (error) {
-        console.log(chalk.red('\n❌ Error executing command:'), error.message);
+        console.log(chalk.red('\n❌ Error:'));
+        console.log(chalk.yellow(getErrorMessage(command, error)));
+        console.log(chalk.dim('\nDetails: ' + error.message));
     }
 };
 
@@ -154,11 +205,12 @@ const displayTool = async (tool) => {
     
     console.log(boxen(
         `${chalk.bold('🛠  ' + tool.name)}\n` +
-        chalk.gray(tool.description),
+        chalk.gray(tool.description) + '\n\n' +
+        chalk.cyan('Available Commands:'),
         {
             padding: 1,
             margin: 1,
-            borderStyle: 'round',
+            borderStyle: 'double',
             borderColor: 'green',
             float: 'center'
         }
@@ -171,15 +223,17 @@ const displayTool = async (tool) => {
             message: chalk.yellow('🎯  Select a command to run:'),
             choices: [
                 ...tool.options.map(opt => ({
-                    name: chalk.green(opt.name) + chalk.dim(` - ${opt.description}`),
+                    name: chalk.green(opt.name) + '\n' + 
+                          chalk.dim('│ ') + chalk.gray(opt.description),
                     value: opt
                 })),
-                new inquirer.Separator(chalk.dim('─'.repeat(50))),
+                new inquirer.Separator(chalk.dim('─'.repeat(60))),
                 {
                     name: chalk.yellow('↩  Back to Tools'),
                     value: 'back'
                 }
-            ]
+            ],
+            pageSize: 12
         }
     ]);
 
@@ -201,75 +255,29 @@ export const showcaseSpecial = async () => {
     while (true) {
         console.clear();
         displayShowcaseHeader();
-
-        const { section } = await inquirer.prompt([
+        
+        const { selectedTool } = await inquirer.prompt([
             {
                 type: 'list',
-                name: 'section',
-                message: chalk.yellow('🎯  What would you like to explore?'),
+                name: 'selectedTool',
+                message: chalk.yellow('🎯  Select a tool category:'),
                 choices: [
-                    {
-                        name: chalk.magenta('🏆  Achievements') + chalk.dim(' - View milestones and recognition'),
-                        value: 'achievements'
-                    },
-                    {
-                        name: chalk.green('🛠  CLI Tools') + chalk.dim(' - Useful developer utilities'),
-                        value: 'tools'
-                    },
-                    new inquirer.Separator(chalk.dim('─'.repeat(50))),
+                    ...tools.map(tool => ({
+                        name: chalk.green(`🛠  ${tool.name}`) + '\n' +
+                              chalk.dim('│ ') + chalk.gray(tool.description),
+                        value: tool
+                    })),
+                    new inquirer.Separator(chalk.dim('─'.repeat(60))),
                     {
                         name: chalk.yellow('↩  Back to Main Menu'),
                         value: 'back'
                     }
-                ]
+                ],
+                pageSize: 8
             }
         ]);
 
-        if (section === 'back') break;
-
-        if (section === 'achievements') {
-            console.clear();
-            displayShowcaseHeader();
-            achievements.forEach(achievement => {
-                console.log(displayAchievement(achievement));
-            });
-            
-            console.log(chalk.dim('\nPress Enter to continue...'));
-            await new Promise(resolve => {
-                process.stdin.once('data', () => {
-                    process.stdin.setRawMode(false);
-                    resolve();
-                });
-                process.stdin.setRawMode(true);
-                process.stdin.resume();
-            });
-        } else if (section === 'tools') {
-            while (true) {
-                console.clear();
-                displayShowcaseHeader();
-                
-                const { selectedTool } = await inquirer.prompt([
-                    {
-                        type: 'list',
-                        name: 'selectedTool',
-                        message: chalk.yellow('🎯  Select a tool category:'),
-                        choices: [
-                            ...tools.map(tool => ({
-                                name: chalk.green(`🛠  ${tool.name}`) + chalk.dim(` - ${tool.description}`),
-                                value: tool
-                            })),
-                            new inquirer.Separator(chalk.dim('─'.repeat(50))),
-                            {
-                                name: chalk.yellow('↩  Back to Showcase'),
-                                value: 'back'
-                            }
-                        ]
-                    }
-                ]);
-
-                if (selectedTool === 'back') break;
-                await displayTool(selectedTool);
-            }
-        }
+        if (selectedTool === 'back') break;
+        await displayTool(selectedTool);
     }
 };
