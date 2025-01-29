@@ -62,6 +62,14 @@ export const showProjects = async () => {
             value: project
         }));
         
+        // Add View More Projects option
+        choices.push({
+            name: chalk.bold('🌟 View More Projects') + '\n' + 
+                  chalk.dim('│ ') + chalk.gray('Explore more projects on GitHub') + '\n' +
+                  chalk.dim('│ ') + chalk.cyan('🔗 ') + chalk.gray('github.com/xensen008'),
+            value: 'more'
+        });
+        
         choices.push(new inquirer.Separator(chalk.dim('─'.repeat(50))));
         choices.push({ 
             name: chalk.yellow('↩  Back to Main Menu'),
@@ -79,6 +87,16 @@ export const showProjects = async () => {
         ]);
 
         if (selected === 'back') break;
+        
+        if (selected === 'more') {
+            await open('https://github.com/xensen008?tab=repositories');
+            console.log(chalk.green('\n✨ Opening GitHub profile to view more projects...\n'));
+            console.log(chalk.dim('\nPress any key to continue...'));
+            await new Promise(resolve => process.stdin.once('data', resolve));
+            console.clear();
+            displayProjectHeader();
+            continue;
+        }
 
         console.clear();
         displayProjectHeader();
