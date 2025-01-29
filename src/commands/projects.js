@@ -15,21 +15,34 @@ const projects = [
             'Project showcase',
             'Developer resources'
         ],
-        github: 'https://github.com/yourusername/devspace-cli',
-        demo: 'https://www.npmjs.com/package/your-package-name'
+        github: 'https://github.com/xensen008/npx-arnabjk008',
+        demo: 'https://www.npmjs.com/package/arnabjk008'
     },
     {
-        name: 'Tech Hub',
-        description: 'A modern platform for developers to share and discover projects',
-        technologies: ['React', 'Node.js', 'MongoDB', 'GraphQL'],
+        name: 'Quietly',
+        description: 'A modern anon feedback plateform',
+        technologies: ['Nextjs', 'React', 'MongoDB', 'shadcn'],
         features: [
-            'Real-time collaboration',
-            'Project discovery',
-            'Code sharing',
-            'Developer networking'
+            'Real-time feedback',
+            'Project review',
+            'Secreat sharing',
+            'Not gonna lie'
         ],
-        github: 'https://github.com/yourusername/tech-hub',
-        demo: 'https://tech-hub-demo.com'
+        github: 'https://github.com/xensen008/quietly',
+        demo: 'https://quietly.vercel.app'
+    },
+    {
+        name: 'Pixifyit',
+        description: 'A modern Social media plateform',
+        technologies: ['MERN', 'React', 'Muatation and queries', 'shadcn','appwrite'],
+        features: [
+            'follow and followers',
+            'infinite loading',
+            'Best looking UI',
+            'responsive in all device'
+        ],
+        github: 'https://github.com/xensen008/Pixify',
+        demo: 'https://quietly.vercel.app'
     }
 ];
 

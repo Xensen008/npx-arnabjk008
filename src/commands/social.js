@@ -6,30 +6,25 @@ import gradient from 'gradient-string';
 
 const socialLinks = {
     GitHub: {
-        url: 'https://github.com/yourusername',
+        url: 'https://github.com/xensen008',
         description: 'Check out my open source projects and contributions',
         icon: '🔮'
     },
     Twitter: {
-        url: 'https://twitter.com/yourusername',
+        url: 'https://twitter.com/arnabjk008',
         description: 'Follow me for tech insights and updates',
         icon: '🐦'
     },
     LinkedIn: {
-        url: 'https://linkedin.com/in/yourusername',
+        url: 'https://linkedin.com/in/arnabjk008',
         description: 'Connect with me professionally',
         icon: '💼'
     },
     Portfolio: {
-        url: 'https://yourportfolio.dev',
+        url: 'https://arnabjk008.tech',
         description: 'Explore my detailed portfolio and blog',
         icon: '🌟'
     },
-    Blog: {
-        url: 'https://yourblog.dev',
-        description: 'Read my latest tech articles and tutorials',
-        icon: '📝'
-    }
 };
 
 const displaySocialHeader = () => {
