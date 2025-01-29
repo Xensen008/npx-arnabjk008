@@ -69,7 +69,7 @@ const questions = [
                 value: 'social'
             },
             {
-                name: chalk.magenta('🛠  Developer Tools') + '\n' +
+                name: chalk.magenta('✨  Special Tools') + '\n' +
                       chalk.dim('│ ') + chalk.gray('Explore useful CLI utilities'),
                 value: 'showcase'
             },
