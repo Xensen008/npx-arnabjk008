@@ -26,14 +26,18 @@
     "projects",
     "developer"
   ],
-  "author": "arnabjk008",
+  "author": {
+    "name": "Arnab jyoti kakati",
+    "email": "arnabjyotikakati008@gmail.com",
+    "url": "https://arnabjk008.tech"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/arnabjk008/npx-arnabjk008"
+    "url": "https://github.com/xensen008/npx-arnabjk008"
   },
   "bugs": {
-    "url": "https://github.com/arnabjk008/npx-arnabjk008/issues"
+    "url": "https://github.com/xensen008/npx-arnabjk008/issues"
   },
-  "homepage": "https://github.com/arnabjk008/npx-arnabjk008#readme"
+  "homepage": "https://github.com/xensen008/npx-arnabjk008#readme"
 }
