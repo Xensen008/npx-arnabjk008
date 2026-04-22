@@ -126,12 +126,7 @@ const tools = [
 ];
 
 const displayShowcaseHeader = () => {
-    console.log(gradient(['#ff5b77', '#0095ff', '#00ff88']).multiline(`
-╭───────────────────────────────────────────╮
-│           Developer Tools                 │
-│        Your CLI Swiss Army Knife          │
-╰───────────────────────────────────────────╯
-`));
+    console.log(chalk.bold('\nDeveloper Tools\n'));
 };
 
 const formatCommandOutput = (output) => {
@@ -204,18 +199,17 @@ const displayTool = async (tool) => {
     displayShowcaseHeader();
     
     console.log(boxen(
-        `${chalk.bold('🛠  ' + tool.name)}\n` +
-        chalk.gray(tool.description) + '\n\n' +
-        chalk.cyan('Available Commands:'),
+        `${chalk.bold(tool.name)}\n` +
+        chalk.gray(tool.description),
         {
             padding: 1,
             margin: 1,
-            borderStyle: 'double',
+            borderStyle: 'round',
             borderColor: 'green',
             float: 'center'
         }
     ));
-
+    
     const { option } = await inquirer.prompt([
         {
             type: 'list',
@@ -223,17 +217,16 @@ const displayTool = async (tool) => {
             message: chalk.yellow('Select:'),
             choices: [
                 ...tool.options.map(opt => ({
-                    name: chalk.green(opt.name) + '\n' + 
-                          chalk.dim('│ ') + chalk.gray(opt.description),
+                    name: chalk.green(opt.name) + chalk.gray(' - ') + chalk.gray(opt.description),
                     value: opt
                 })),
-                new inquirer.Separator(chalk.dim('─'.repeat(60))),
+                new inquirer.Separator(chalk.dim('─'.repeat(30))),
                 {
                     name: chalk.yellow('Back'),
                     value: 'back'
                 }
             ],
-            pageSize: 12
+            pageSize: 10
         }
     ]);
 
@@ -248,6 +241,8 @@ const displayTool = async (tool) => {
             process.stdin.setRawMode(true);
             process.stdin.resume();
         });
+        console.clear();
+        return displayTool(tool);
     }
 };
 
