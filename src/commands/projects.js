@@ -72,20 +72,16 @@ export const showProjects = async () => {
         displayProjectHeader();
         
         const choices = projects.map(project => ({
-            name: chalk.bold(project.name) + '\n' + 
-                  chalk.dim('│ ') + chalk.gray(project.description) + '\n' +
-                  chalk.dim('│ ') + chalk.cyan('🛠  ') + chalk.gray(project.technologies.join(' • ')),
+            name: chalk.bold(project.name) + chalk.white(' - ') + chalk.white(project.description),
             value: project
         }));
         
         choices.push({
-            name: chalk.bold('🌟 View More Projects') + '\n' + 
-                  chalk.dim('│ ') + chalk.gray('Explore more projects on GitHub') + '\n' +
-                  chalk.dim('│ ') + chalk.cyan('🔗 ') + chalk.gray('github.com/xensen008'),
+            name: chalk.bold('View More') + chalk.white(' - More on GitHub'),
             value: 'more'
         });
         
-        choices.push(new inquirer.Separator(chalk.dim('─'.repeat(50))));
+        choices.push(new inquirer.Separator(chalk.dim('─'.repeat(30))));
         choices.push({ 
             name: chalk.yellow('Back'),
             value: 'back'
@@ -107,25 +103,20 @@ export const showProjects = async () => {
         
         if (selected === 'more') {
             await open('https://github.com/xensen008?tab=repositories');
-            console.log(chalk.green('\n✨ Opening GitHub profile to view more projects...\n'));
-            console.log(chalk.dim('\nPress any key to continue...'));
+            console.log(chalk.green('\nOpening GitHub...\n'));
+            console.log(chalk.dim('\nPress Enter to continue...'));
             await handleContinue();
             continue;
         }
-
+        
         console.clear();
         displayProjectHeader();
         
         const projectInfo = boxen(
-            `${gradient(['#ff5b77', '#00ff88']).multiline(selected.name)}\n\n` +
+            `${chalk.bold(selected.name)}\n\n` +
             `${selected.description}\n\n` +
-            `${chalk.cyan('🛠  Technologies:')}\n` +
-            `${selected.technologies.map(tech => chalk.gray('▸ ') + tech).join('\n')}\n\n` +
-            `${chalk.cyan('✨  Key Features:')}\n` +
-            `${selected.features.map(feature => chalk.gray('▸ ') + feature).join('\n')}\n\n` +
-            `${chalk.cyan('🔗  Links:')}\n` +
-            `${chalk.gray('▸')} GitHub: ${selected.github}\n` +
-            `${chalk.gray('▸')} Demo: ${selected.demo}`,
+            `Tech: ${selected.technologies.join(', ')}\n\n` +
+            `Link: ${selected.github}`,
             {
                 padding: 1,
                 margin: 1,
@@ -134,40 +125,31 @@ export const showProjects = async () => {
                 float: 'center'
             }
         );
-
+        
         console.log(projectInfo);
-
+        
         const { action } = await inquirer.prompt([
             {
                 type: 'list',
                 name: 'action',
                 message: chalk.yellow('Select:'),
                 choices: [
-                    { 
-                        name: chalk.blue('View Source'),
-                        value: 'github'
-                    },
-                    { 
-                        name: chalk.green('🚀  View Live Demo') + chalk.dim(' - Open demo site'),
-                        value: 'demo'
-                    },
-                    new inquirer.Separator(chalk.dim('─'.repeat(50))),
-                    { 
-                        name: chalk.yellow('Back'),
-                        value: 'back'
-                    }
+                    { name: chalk.blue('View Source'), value: 'github' },
+                    { name: chalk.green('View Demo'), value: 'demo' },
+                    new inquirer.Separator(chalk.dim('─'.repeat(30))),
+                    { name: chalk.yellow('Back'), value: 'back' }
                 ]
             }
         ]);
 
         if (action === 'github') {
             await open(selected.github);
-            console.log(chalk.green('\n✨ Opening GitHub repository...\n'));
-            console.log(chalk.dim('\nPress any key to continue...'));
+            console.log(chalk.green('\nOpening...\n'));
+            console.log(chalk.dim('\nPress Enter to continue...'));
             await handleContinue();
         } else if (action === 'demo') {
             await open(selected.demo);
-            console.log(chalk.green('\n✨ Opening live demo...\n'));
+            console.log(chalk.green('\nOpening...\n'));
             console.log(chalk.dim('\nPress any key to continue...'));
             await handleContinue();
         }

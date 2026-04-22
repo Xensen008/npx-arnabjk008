@@ -200,7 +200,7 @@ const displayTool = async (tool) => {
     
     console.log(boxen(
         `${chalk.bold(tool.name)}\n` +
-        chalk.gray(tool.description),
+        chalk.white(tool.description),
         {
             padding: 1,
             margin: 1,
@@ -217,7 +217,7 @@ const displayTool = async (tool) => {
             message: chalk.yellow('Select:'),
             choices: [
                 ...tool.options.map(opt => ({
-                    name: chalk.green(opt.name) + chalk.gray(' - ') + chalk.gray(opt.description),
+                    name: chalk.green(opt.name) + chalk.white(' - ') + chalk.white(opt.description),
                     value: opt
                 })),
                 new inquirer.Separator(chalk.dim('─'.repeat(30))),

@@ -40,10 +40,10 @@ const questions = [
         message: chalk.yellow("Select:"),
         prefix: ">",
         choices: [
-            { name: chalk.green("Projects") + chalk.gray(" - View my projects"), value: "projects" },
-            { name: chalk.blue("Connect") + chalk.gray(" - Social links"), value: "social" },
-            { name: chalk.magenta("Tools") + chalk.gray(" - CLI utilities"), value: "showcase" },
-            new inquirer.Separator(chalk.dim("─".repeat(30))),
+            { name: chalk.green("Projects") + chalk.white(" - View my projects"), value: "projects" },
+            { name: chalk.blue("Connect") + chalk.white(" - Social links"), value: "social" },
+            { name: chalk.magenta("Tools") + chalk.white(" - CLI utilities"), value: "showcase" },
+            new inquirer.Separator(chalk.white("─".repeat(30))),
             { name: chalk.red("Exit"), value: "exit" }
         ],
         pageSize: 8,
@@ -53,8 +53,8 @@ const questions = [
 const displayFooter = async () => {
     console.log("\n" + chalk.dim("─".repeat(process.stdout.columns)));
     console.log(
-        chalk.dim("Pro Tip: ") +
-        chalk.gray("Use arrow keys to navigate and Enter to select"),
+        chalk.white("Pro Tip: ") +
+        chalk.white("Use arrow keys to navigate and Enter to select"),
     );
 };
 

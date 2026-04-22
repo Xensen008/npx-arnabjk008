@@ -21,7 +21,7 @@ const socialLinks = {
         icon: '💼'
     },
     Portfolio: {
-        url: 'https://arnabjk008.tech',
+        url: 'https://arnabjk008.dev',
         description: 'Explore my detailed portfolio and blog',
         icon: '🌟'
     },
@@ -53,19 +53,17 @@ export const showSocialLinks = async () => {
         console.clear();
         displaySocialHeader();
 
-        const choices = Object.entries(socialLinks).map(([platform, info]) => ({
-            name: chalk.bold(`${info.icon}  ${platform}`) + '\n' +
-                  chalk.dim('│ ') + chalk.gray(info.description) + '\n' +
-                  chalk.dim('│ ') + chalk.blue(info.url),
+const choices = Object.entries(socialLinks).map(([platform, info]) => ({
+            name: chalk.bold(platform) + chalk.white(' - ') + chalk.blue(info.url),
             value: info.url
         }));
-
-        choices.push(new inquirer.Separator(chalk.dim('─'.repeat(50))));
+        
+        choices.push(new inquirer.Separator(chalk.white('─'.repeat(30))));
         choices.push({ 
             name: chalk.yellow('Back'),
             value: 'back'
         });
-
+        
         const { link } = await inquirer.prompt([
             {
                 type: 'list',
@@ -75,26 +73,15 @@ export const showSocialLinks = async () => {
                 choices
             }
         ]);
-
+        
         if (link === 'back') {
             break;
         }
-
-        await open(link);
-        const box = boxen(
-            chalk.green('✨ Opening browser to connect with you!\n\n') +
-            chalk.dim('URL: ') + chalk.blue(link),
-            {
-                padding: 1,
-                margin: 1,
-                borderStyle: 'round',
-                borderColor: 'cyan',
-                float: 'center'
-            }
-        );
-        console.log('\n' + box);
         
-        console.log(chalk.dim('\nPress any key to continue...'));
+        await open(link);
+        console.log(chalk.green('\nOpening...\n'));
+        
+        console.log(chalk.white('\nPress Enter to continue...'));
         await handleContinue();
     }
 };
