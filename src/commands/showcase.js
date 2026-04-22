@@ -64,38 +64,38 @@ const tools = [
             }
         ]
     },
-    {
-        name: 'Network Tools',
-        description: 'Network utilities and diagnostics',
-        command: 'network',
-        options: [
-            {
-                name: 'IP Info',
-                cmd: process.platform === 'win32' ? 'ipconfig' : 'ifconfig',
-                description: 'View network interface details'
+{
+                name: 'Network Tools',
+                description: 'Network utilities and diagnostics',
+                command: 'network',
+                options: [
+                    {
+                        name: 'IP Info',
+                        cmd: process.platform === 'win32' ? 'ipconfig' : 'ip addr show',
+                        description: 'View network interface details'
+                    },
+                    {
+                        name: 'DNS Check',
+                        cmd: process.platform === 'win32' ? 'nslookup google.com' : 'cat /etc/resolv.conf',
+                        description: 'Show DNS nameservers'
+                    },
+                    {
+                        name: 'Internet Speed',
+                        cmd: process.platform === 'win32' ? 'ping -n 4 8.8.8.8' : 'ping -c 4 8.8.8.8',
+                        description: 'Quick internet speed test'
+                    },
+                    {
+                        name: 'Port Scanner',
+                        cmd: process.platform === 'win32' ? 'netstat -an' : 'ss -tuln',
+                        description: 'View open ports'
+                    },
+                    {
+                        name: 'Network Routes',
+                        cmd: process.platform === 'win32' ? 'route print' : 'ip route',
+                        description: 'Display routing table'
+                    }
+                ]
             },
-            {
-                name: 'DNS Check',
-                cmd: 'nslookup google.com',
-                description: 'Test DNS resolution'
-            },
-            {
-                name: 'Internet Speed',
-                cmd: 'ping -n 4 8.8.8.8',
-                description: 'Quick internet speed test'
-            },
-            {
-                name: 'Port Scanner',
-                cmd: process.platform === 'win32' ? 'netstat -an' : 'netstat -tuln',
-                description: 'View open ports'
-            },
-            {
-                name: 'Network Routes',
-                cmd: process.platform === 'win32' ? 'route print' : 'netstat -r',
-                description: 'Display routing table'
-            }
-        ]
-    },
     {
         name: 'Development Tools',
         description: 'Useful utilities for developers',
