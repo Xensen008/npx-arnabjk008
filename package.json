@@ -1,6 +1,6 @@
 {
   "name": "arnabjk008",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A beautiful CLI to showcase my portfolio, projects, and special tool",
   "main": "src/index.js",
   "type": "module",
