@@ -7,6 +7,7 @@ import gradient from 'gradient-string';
 const projects = [
     {
         name: 'DevSpace CLI',
+        type: 'CLI · Portfolio',
         description: 'An interactive command-line portfolio and developer tools showcase',
         technologies: ['Node.js', 'ES Modules', 'Interactive CLI'],
         features: [
@@ -20,29 +21,31 @@ const projects = [
     },
     {
         name: 'Quietly',
-        description: 'A modern anon feedback plateform',
+        type: 'Web App · Feedback',
+        description: 'A modern anonymous feedback platform',
         technologies: ['Nextjs', 'React', 'MongoDB', 'shadcn'],
         features: [
             'Real-time feedback',
             'Project review',
-            'Secreat sharing',
-            'Not gonna lie'
+            'Secret sharing',
+            'Anonymous posts'
         ],
         github: 'https://github.com/xensen008/quietly',
         demo: 'https://quietly.vercel.app'
     },
     {
         name: 'Pixifyit',
-        description: 'A modern Social media plateform',
-        technologies: ['MERN', 'React', 'Muatation and queries', 'shadcn','appwrite'],
+        type: 'Web App · Social',
+        description: 'A modern social media platform',
+        technologies: ['MERN', 'React', 'Mutation and queries', 'shadcn', 'appwrite'],
         features: [
-            'follow and followers',
-            'infinite loading',
+            'Follow and followers',
+            'Infinite loading',
             'Best looking UI',
-            'responsive in all device'
+            'Responsive in all devices'
         ],
         github: 'https://github.com/xensen008/Pixify',
-        demo: 'https://quietly.vercel.app'
+        demo: 'https://pixify.vercel.app'
     }
 ];
 
@@ -72,21 +75,13 @@ export const showProjects = async () => {
         displayProjectHeader();
         
         const choices = projects.map(project => ({
-            name: chalk.bold(project.name) + chalk.white(' - ') + chalk.white(project.description),
+            name: project.name + (project.type ? ' [' + project.type + ']' : ''),
             value: project
         }));
         
-        choices.push({
-            name: chalk.bold('View More') + chalk.white(' - More on GitHub'),
-            value: 'more'
-        });
+        choices.push({ name: 'View All on GitHub', value: 'more' });
+        choices.push({ name: 'Back', value: 'back' });
         
-        choices.push(new inquirer.Separator(chalk.dim('─'.repeat(30))));
-        choices.push({ 
-            name: chalk.yellow('Back'),
-            value: 'back'
-        });
-
         const { selected } = await inquirer.prompt([
             {
                 type: 'list',
@@ -112,19 +107,17 @@ export const showProjects = async () => {
         console.clear();
         displayProjectHeader();
         
-        const projectInfo = boxen(
-            `${chalk.bold(selected.name)}\n\n` +
-            `${selected.description}\n\n` +
-            `Tech: ${selected.technologies.join(', ')}\n\n` +
-            `Link: ${selected.github}`,
-            {
-                padding: 1,
-                margin: 1,
-                borderStyle: 'round',
-                borderColor: 'cyan',
-                float: 'center'
-            }
-        );
+        const projectDesc = selected.type 
+            ? `${selected.name} [${selected.type}]\n\n${selected.description}\n\nTech: ${selected.technologies.join(', ')}`
+            : `${selected.name}\n\n${selected.description}\n\nTech: ${selected.technologies.join(', ')}`;
+        
+        const projectInfo = boxen(projectDesc, {
+            padding: 1,
+            margin: 1,
+            borderStyle: 'round',
+            borderColor: 'cyan',
+            float: 'center'
+        });
         
         console.log(projectInfo);
         
@@ -134,10 +127,9 @@ export const showProjects = async () => {
                 name: 'action',
                 message: chalk.yellow('Select:'),
                 choices: [
-                    { name: chalk.blue('View Source'), value: 'github' },
-                    { name: chalk.green('View Demo'), value: 'demo' },
-                    new inquirer.Separator(chalk.dim('─'.repeat(30))),
-                    { name: chalk.yellow('Back'), value: 'back' }
+                    { name: 'View Source', value: 'github' },
+                    { name: 'View Demo', value: 'demo' },
+                    { name: 'Back', value: 'back' }
                 ]
             }
         ]);
