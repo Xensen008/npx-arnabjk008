@@ -87,7 +87,7 @@ export const showProjects = async () => {
         
         choices.push(new inquirer.Separator(chalk.dim('─'.repeat(50))));
         choices.push({ 
-            name: chalk.yellow('↩  Back to Main Menu'),
+            name: chalk.yellow('Back'),
             value: 'back'
         });
 
@@ -95,7 +95,7 @@ export const showProjects = async () => {
             {
                 type: 'list',
                 name: 'selected',
-                message: chalk.blue('🎯  Select a project to explore:'),
+                message: chalk.blue('Select:'),
                 pageSize: 10,
                 choices
             }
@@ -141,10 +141,10 @@ export const showProjects = async () => {
             {
                 type: 'list',
                 name: 'action',
-                message: chalk.yellow('🎯  What would you like to do?'),
+                message: chalk.yellow('Select:'),
                 choices: [
                     { 
-                        name: chalk.blue('🔗  View Source Code') + chalk.dim(' - Open GitHub repository'),
+                        name: chalk.blue('View Source'),
                         value: 'github'
                     },
                     { 
@@ -153,7 +153,7 @@ export const showProjects = async () => {
                     },
                     new inquirer.Separator(chalk.dim('─'.repeat(50))),
                     { 
-                        name: chalk.yellow('↩  Back to Projects'),
+                        name: chalk.yellow('Back'),
                         value: 'back'
                     }
                 ]

@@ -62,7 +62,7 @@ export const showSocialLinks = async () => {
 
         choices.push(new inquirer.Separator(chalk.dim('─'.repeat(50))));
         choices.push({ 
-            name: chalk.yellow('↩  Back to Main Menu'),
+            name: chalk.yellow('Back'),
             value: 'back'
         });
 
@@ -70,7 +70,7 @@ export const showSocialLinks = async () => {
             {
                 type: 'list',
                 name: 'link',
-                message: chalk.yellow('🎯  Where would you like to connect?'),
+                message: chalk.yellow('Select:'),
                 pageSize: 10,
                 choices
             }

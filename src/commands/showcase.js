@@ -220,7 +220,7 @@ const displayTool = async (tool) => {
         {
             type: 'list',
             name: 'option',
-            message: chalk.yellow('🎯  Select a command to run:'),
+            message: chalk.yellow('Select:'),
             choices: [
                 ...tool.options.map(opt => ({
                     name: chalk.green(opt.name) + '\n' + 
@@ -229,7 +229,7 @@ const displayTool = async (tool) => {
                 })),
                 new inquirer.Separator(chalk.dim('─'.repeat(60))),
                 {
-                    name: chalk.yellow('↩  Back to Tools'),
+                    name: chalk.yellow('Back'),
                     value: 'back'
                 }
             ],
@@ -260,16 +260,15 @@ export const showcaseSpecial = async () => {
             {
                 type: 'list',
                 name: 'selectedTool',
-                message: chalk.yellow('🎯  Select a tool category:'),
+                message: chalk.yellow('Select:'),
                 choices: [
                     ...tools.map(tool => ({
-                        name: chalk.green(`🛠  ${tool.name}`) + '\n' +
-                              chalk.dim('│ ') + chalk.gray(tool.description),
+                        name: chalk.green(tool.name),
                         value: tool
                     })),
-                    new inquirer.Separator(chalk.dim('─'.repeat(60))),
+                    new inquirer.Separator(chalk.dim('─'.repeat(30))),
                     {
-                        name: chalk.yellow('↩  Back to Main Menu'),
+                        name: chalk.yellow('Back'),
                         value: 'back'
                     }
                 ],

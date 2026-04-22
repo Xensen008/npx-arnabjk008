@@ -37,38 +37,14 @@ const questions = [
     {
         type: "list",
         name: "action",
-        message: chalk.yellow("Select an option:"),
+        message: chalk.yellow("Select:"),
         prefix: ">",
         choices: [
-            {
-                name:
-                    chalk.green("Projects") +
-                    "\n" +
-                    chalk.dim("| ") +
-                    chalk.gray("View my projects"),
-                value: "projects",
-            },
-            {
-                name:
-                    chalk.blue("Connect") +
-                    "\n" +
-                    chalk.dim("| ") +
-                    chalk.gray("Social links"),
-                value: "social",
-            },
-            {
-                name:
-                    chalk.magenta("Tools") +
-                    "\n" +
-                    chalk.dim("| ") +
-                    chalk.gray("CLI utilities"),
-                value: "showcase",
-            },
-            new inquirer.Separator(chalk.dim("─".repeat(60))),
-            {
-                name: chalk.red("Exit"),
-                value: "exit",
-            },
+            { name: chalk.green("Projects") + chalk.gray(" - View my projects"), value: "projects" },
+            { name: chalk.blue("Connect") + chalk.gray(" - Social links"), value: "social" },
+            { name: chalk.magenta("Tools") + chalk.gray(" - CLI utilities"), value: "showcase" },
+            new inquirer.Separator(chalk.dim("─".repeat(30))),
+            { name: chalk.red("Exit"), value: "exit" }
         ],
         pageSize: 8,
     },
