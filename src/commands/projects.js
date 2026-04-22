@@ -6,18 +6,18 @@ import gradient from 'gradient-string';
 
 const projects = [
     {
-        name: 'DevSpace CLI',
-        type: 'CLI · Portfolio',
-        description: 'An interactive command-line portfolio and developer tools showcase',
-        technologies: ['Node.js', 'ES Modules', 'Interactive CLI'],
+        name: 'Metly',
+        type: 'Web · Meeting',
+        description: 'A Meeting platform for college students and professionals who need seamless meeting experience',
+        technologies: ['Nextjs', 'GenAI', 'Typescript'],
         features: [
-            'Beautiful gradient interfaces',
-            'Interactive menus',
-            'Project showcase',
-            'Developer resources'
+            'Meetings schedules',
+            'personal rooms and recoding',
+            'Join or create meetings',
+            'github, google and email base oauth'
         ],
-        github: 'https://github.com/xensen008/npx-arnabjk008',
-        demo: 'https://www.npmjs.com/package/arnabjk008'
+        github: 'https://github.com/xensen008/metly',
+        demo: 'https://metly.arnabjk008.dev'
     },
     {
         name: 'Quietly',
