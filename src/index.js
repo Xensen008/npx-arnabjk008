@@ -11,22 +11,20 @@ const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const displayBanner = async () => {
     console.clear();
-    const text = figlet.textSync('Xensen', {
+    const text = figlet.textSync('Arnab', {
         font: 'ANSI Shadow',
-        horizontalLayout: 'fitted',
+        horizontalLayout: 'default',
         verticalLayout: 'default'
     });
     
-    // Create a beautiful gradient effect
-    const rainbowTitle = gradient(['#ff5b77', '#00ff88', '#0095ff']).multiline(text);
-    console.log(rainbowTitle);
+    console.log(chalk.white(text));
     
     // Display quick links
     console.log(boxen(
         chalk.bold('🌟 Quick Links:\n\n') +
         `${chalk.dim('│')} ${chalk.cyan('GitHub:')}    ${chalk.blue('https://github.com/xensen008')}\n` +
         `${chalk.dim('│')} ${chalk.cyan('Twitter:')}   ${chalk.blue('https://twitter.com/arnabjk008')}\n` +
-        `${chalk.dim('│')} ${chalk.cyan('Portfolio:')} ${chalk.blue('https://arnabjk008.tech')}`,
+        `${chalk.dim('│')} ${chalk.cyan('Portfolio:')} ${chalk.blue('https://arnabjk008.dev')}`,
         {
             padding: 1,
             margin: { top: 1, bottom: 1 },
@@ -107,13 +105,10 @@ const main = async () => {
                 await showcaseSpecial();
                 break;
             case 'exit':
-                console.log('\n' + gradient(['#ff5b77', '#00ff88']).multiline(
-                    figlet.textSync('See You Soon!', {
-                        font: 'Small',
-                        horizontalLayout: 'fitted'
-                    })
+                console.log(chalk.white(
+                    figlet.textSync('Bye!', { font: 'ANSI Shadow' })
                 ));
-                console.log(chalk.cyan('\n🌟 Thank you for visiting! Have a great day!\n'));
+                console.log(chalk.cyan('\n👋 Thanks!\n'));
                 process.exit(0);
         }
     }
