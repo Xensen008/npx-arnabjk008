@@ -1,36 +1,66 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
-import figlet from "figlet";
-import gradient from "gradient-string";
-import boxen from "boxen";
 import { showSocialLinks } from "./commands/social.js";
 import { showProjects } from "./commands/projects.js";
 import { showcaseSpecial } from "./commands/showcase.js";
 
 const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
 
+
+const archLogoLines = [
+    "                  -`",
+    "                 .o+`",
+    "                `ooo/",
+    "               `+oooo:",
+    "              `+oooooo:",
+    "              -+oooooo+:",
+    "            `/:-:++oooo+:",
+    "           `/++++/+++++++:",
+    "          `/++++++++++++++:",
+    "         `/+++ooooooooooooo/`",
+    "        ./ooosssso++osssssso+`",
+    "       .oossssso-````/ossssss+`",
+    "      -osssssso.      :ssssssso.",
+    "     :osssssss/        osssso+++.",
+    "    /ossssssss/        +ssssooo/-",
+    "  `/ossssso+/:-        -:/+osssso+-",
+    " `+sso+:-`                 `.-/+oso:",
+    "`++:.                           `-/+/",
+    ".`                                 `/"
+];
+
+const archColor = chalk.hex("#00f8f8");
+const bright = chalk.white;
+const dim = chalk.hex("#aaaaaa");
+
+const dataLines = [
+    `${chalk.bold.hex("#00f8f8")("Arnab Jyoti Kakati")} ${dim("• xensen008")}`,
+    `${chalk.hex("#cc88ff")("Full-stack Dev")} ${dim("•")} ${chalk.hex("#6699ff")("Arch btw")}`,
+    `${dim("Assam, India")}`,
+    ``,
+    `${bright("Applied AI Engineer")} ${dim("/ building things that ship")}`,
+    `${dim("Web:")}   ${chalk.hex("#00f8f8")("https://arnabjk008.dev")}`,
+    `${dim("GitHub:")} ${chalk.hex("#00f8f8")("https://github.com/xenser008")}`,
+    `${dim("X:")}     ${chalk.hex("#00f8f8")("https://x.com/arnabjk008")}`,
+    ``,
+    `${chalk.hex("#ffcc44")("Skills:")}   ${bright("Next.js  React-Native  Python  Rust  Docker  Linux")}`,
+    `${chalk.hex("#ffcc44")("Projects:")} ${bright("Bucket0  Nimu App  AI Browser")}`,
+    ``,
+    `${dim("Another JS dev thinking he gonna build the next big things")}`,
+];
+
 const displayBanner = async () => {
     console.clear();
-    const text = figlet.textSync("Arnab", {
-        font: "ANSI Shadow",
-        horizontalLayout: "fitted",
-        verticalLayout: "fitted",
-    });
-
-console.log(chalk.white(text));
-    
-    console.log(chalk.bold("Quick Links:"));
-    console.log(chalk.cyan("GitHub: ") + chalk.blue("https://github.com/xensen008"));
-    console.log(chalk.cyan("Twitter: ") + chalk.blue("https://twitter.com/arnabjk008"));
-    console.log(chalk.cyan("Portfolio: ") + chalk.blue("https://arnabjk008.dev"));
-
-    console.log(
-        chalk.white(
-            "\nFull-stack developer who builds fast, purposeful web and app experiences, from clean interfaces to resilient backend systems. I've architected and shipped multiple production applications, working at the intersection of engineering and design to turn well-defined problems into polished, shipping products.",
-        ),
-    );
-
-    console.log(chalk.dim("─".repeat(process.stdout.columns)));
+    console.log("");
+    const logoWidth = Math.max(...archLogoLines.map(l => l.length));
+    const maxLines = Math.max(archLogoLines.length, dataLines.length);
+    for (let i = 0; i < maxLines; i++) {
+        const raw = archLogoLines[i] ?? "";
+        const logo = archColor(raw.padEnd(logoWidth));
+        const data = dataLines[i] ?? "";
+        console.log(`${logo}   ${data}`);
+    }
+    console.log("");
 };
 
 const questions = [
@@ -51,11 +81,7 @@ const questions = [
 ];
 
 const displayFooter = async () => {
-    console.log("\n" + chalk.dim("─".repeat(process.stdout.columns)));
-    console.log(
-        chalk.white("Pro Tip: ") +
-        chalk.white("Use arrow keys to navigate and Enter to select"),
-    );
+    console.log("");
 };
 
 const main = async () => {
@@ -77,8 +103,7 @@ const main = async () => {
                 await showcaseSpecial();
                 break;
             case "exit":
-                console.log(chalk.white(figlet.textSync("Bye!", { font: "ANSI Shadow", horizontalLayout: "fitted" })));
-                console.log(chalk.cyan("\nThanks!\n"));
+                console.log(chalk.cyan("\nGoodbye!\n"));
                 process.exit(0);
         }
     }
