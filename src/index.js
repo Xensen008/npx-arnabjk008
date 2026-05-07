@@ -35,7 +35,7 @@ const dim = chalk.hex("#aaaaaa");
 
 const dataLines = [
     `${chalk.bold.hex("#00f8f8")("Arnab Jyoti Kakati")} ${dim("• xensen008")}`,
-    `${chalk.hex("#cc88ff")("Full-stack Dev")} ${dim("•")} ${chalk.hex("#6699ff")("Arch btw")}`,
+    `${chalk.hex("#cc88ff")("Full-stack Dev")} ${dim("•")} ${chalk.hex("#6699ff")("I use Arch btw")}`,
     `${dim("Assam, India")}`,
     ``,
     `${bright("Applied AI Engineer")} ${dim("/ building things that ship")}`,
