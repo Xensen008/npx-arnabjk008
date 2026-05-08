@@ -44,7 +44,7 @@ const dataLines = [
     `${dim("X:")}     ${chalk.hex("#00f8f8")("https://x.com/arnabjk008")}`,
     ``,
     `${chalk.hex("#ffcc44")("Skills:")}   ${bright("Next.js  React-Native  Python  Rust  Docker  Linux")}`,
-    `${chalk.hex("#ffcc44")("Projects:")} ${bright("Bucket0  Nimu App  AI Browser")}`,
+    `${chalk.hex("#ffcc44")("Projects:")} ${bright("Metly  Pixify  Quietly")}`,
     ``,
     `${dim("Another JS dev thinking he gonna build the next big things")}`,
 ];
