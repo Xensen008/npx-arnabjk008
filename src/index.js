@@ -63,6 +63,8 @@ const displayBanner = async () => {
     console.log("");
 };
 
+//TODO:change in the PROJECT select option
+
 const questions = [
     {
         type: "list",
