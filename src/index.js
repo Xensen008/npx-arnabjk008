@@ -105,7 +105,7 @@ const main = async () => {
                 await showcaseSpecial();
                 break;
             case "exit":
-                console.log(chalk.cyan("\nGoodbye!\n"));
+                console.log(chalk.cyan("\nGoodbye! please Update your .env s\n"));
                 process.exit(0);
         }
     }
