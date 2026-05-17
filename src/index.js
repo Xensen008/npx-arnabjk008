@@ -93,7 +93,6 @@ const main = async () => {
         await displayFooter();
         const { action } = await inquirer.prompt(questions);
 
-        console.clear();
         switch (action) {
             case "projects":
                 await showProjects();
@@ -111,4 +110,4 @@ const main = async () => {
     }
 };
 
-export { main };
+export { main, displayBanner };

@@ -3,6 +3,7 @@ import boxen from 'boxen';
 import open from 'open';
 import inquirer from 'inquirer';
 import gradient from 'gradient-string';
+import { displayBanner } from '../index.js';
 
 const projects = [
     {
@@ -71,7 +72,7 @@ const handleContinue = () => {
 
 export const showProjects = async () => {
     while (true) {
-        console.clear();
+        await displayBanner();
         displayProjectHeader();
         
         const choices = projects.map(project => ({
@@ -104,7 +105,7 @@ export const showProjects = async () => {
             continue;
         }
         
-        console.clear();
+        await displayBanner();
         displayProjectHeader();
         
         const projectDesc = selected.type 

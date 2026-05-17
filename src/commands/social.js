@@ -3,6 +3,7 @@ import boxen from 'boxen';
 import open from 'open';
 import inquirer from 'inquirer';
 import gradient from 'gradient-string';
+import { displayBanner } from '../index.js';
 
 const socialLinks = {
     GitHub: {
@@ -50,7 +51,7 @@ const handleContinue = () => {
 
 export const showSocialLinks = async () => {
     while (true) {
-        console.clear();
+        await displayBanner();
         displaySocialHeader();
 
 const choices = Object.entries(socialLinks).map(([platform, info]) => ({

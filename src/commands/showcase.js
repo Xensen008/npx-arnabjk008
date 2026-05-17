@@ -1,11 +1,10 @@
-// src/commands/showcase.js
-
 import chalk from 'chalk';
 import gradient from 'gradient-string';
 import boxen from 'boxen';
 import inquirer from 'inquirer';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { displayBanner } from '../index.js';
 
 const execAsync = promisify(exec);
 //tools
@@ -174,7 +173,7 @@ const getErrorMessage = (command, error) => {
 
 const runCommand = async (command) => {
     try {
-        console.clear();
+        await displayBanner();
         console.log(chalk.cyan('\n🔄 Running command: ') + chalk.yellow(command.cmd) + '\n');
         const { stdout, stderr } = await execAsync(command.cmd);
         
@@ -196,7 +195,7 @@ const runCommand = async (command) => {
 };
 
 const displayTool = async (tool) => {
-    console.clear();
+    await displayBanner();
     displayShowcaseHeader();
     
     console.log(boxen(
@@ -242,14 +241,14 @@ const displayTool = async (tool) => {
             process.stdin.setRawMode(true);
             process.stdin.resume();
         });
-        console.clear();
+        await displayBanner();
         return displayTool(tool);
     }
 };
 
 export const showcaseSpecial = async () => {
     while (true) {
-        console.clear();
+        await displayBanner();
         displayShowcaseHeader();
         
         const { selectedTool } = await inquirer.prompt([
