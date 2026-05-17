@@ -50,8 +50,10 @@ const handleContinue = () => {
 };
 
 export const showSocialLinks = async () => {
+    let first = true;
     while (true) {
-        await displayBanner();
+        if (!first) await displayBanner();
+        first = false;
         displaySocialHeader();
 
 const choices = Object.entries(socialLinks).map(([platform, info]) => ({

@@ -71,8 +71,10 @@ const handleContinue = () => {
 };
 
 export const showProjects = async () => {
+    let first = true;
     while (true) {
-        await displayBanner();
+        if (!first) await displayBanner();
+        first = false;
         displayProjectHeader();
         
         const choices = projects.map(project => ({

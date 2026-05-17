@@ -247,8 +247,10 @@ const displayTool = async (tool) => {
 };
 
 export const showcaseSpecial = async () => {
+    let first = true;
     while (true) {
-        await displayBanner();
+        if (!first) await displayBanner();
+        first = false;
         displayShowcaseHeader();
         
         const { selectedTool } = await inquirer.prompt([
